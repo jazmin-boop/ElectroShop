@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Título y código de barras simulado -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Comprobante de Pago"
+        android:textColor="#222222"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Código de barras simulado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#EEEEEE"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="||| |||||| || |||||||| |||| ||||||"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:letterSpacing="0.2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Detalle de la Orden -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F8F9FA"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="N.º de Orden" android:textColor="#666"/>
+            <TextView android:id="@+id/tvReceiptId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CDR4GHGJF" android:textColor="#222" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Tipo de Pedido" android:textColor="#666"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Envío a domicilio" android:textColor="#222"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Dirección de Entrega" android:textColor="#666"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Av. Principal 123" android:textColor="#0288D1" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="6dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Fecha de Pedido" android:textColor="#666"/>
+            <TextView android:id="@+id/tvReceiptDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 Sep, 2026 | 10:00 AM" android:textColor="#222"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Código de Cupón" android:textColor="#666"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ELECTRO2026" android:textColor="#222"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Montos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subtotal" android:textColor="#666"/>
+            <TextView android:id="@+id/tvReceiptSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="S/ 0.00" android:textColor="#222"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Impuestos (IGV)" android:textColor="#666"/>
+            <TextView android:id="@+id/tvReceiptTax" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+ S/ 0.00" android:textColor="#222"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Costo de Envío" android:textColor="#666"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="S/ 0.00" android:textColor="#222"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Descuento" android:textColor="#666"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="S/ 0.00" android:textColor="#222"/>
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE" android:layout_marginVertical="6dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="TOTAL" android:textColor="#222" android:textStyle="bold" android:textSize="16sp"/>
+            <TextView android:id="@+id/tvReceiptTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="S/ 0.00" android:textColor="#0288D1" android:textStyle="bold" android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDownloadReceipt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Descargar Comprobante"
+        android:backgroundTint="#0288D1"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="25dp" />
+
+</LinearLayout>
