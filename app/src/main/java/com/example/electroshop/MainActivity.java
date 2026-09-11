@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         tvCount = findViewById(R.id.tvCount);
         tvRolHeader = findViewById(R.id.tvRolHeader);
         View containerCarrito = findViewById(R.id.containerCarrito);
+        View cardOfertas = findViewById(R.id.cardOfertas);
 
         // Mostrar bienvenida y nombre del rol en cabecera
         if (tvRolHeader != null) {
@@ -71,13 +72,16 @@ public class MainActivity extends AppCompatActivity {
         if ("admin".equals(role)) {
             btnNuevo.setVisibility(View.VISIBLE);
             if (containerCarrito != null) containerCarrito.setVisibility(View.GONE);
+            if (cardOfertas != null) cardOfertas.setVisibility(View.GONE);
         } else if ("empleado".equals(role)) {
             btnNuevo.setVisibility(View.VISIBLE);
             if (containerCarrito != null) containerCarrito.setVisibility(View.GONE);
+            if (cardOfertas != null) cardOfertas.setVisibility(View.GONE);
         } else {
             // Cliente
             btnNuevo.setVisibility(View.GONE);
             if (containerCarrito != null) containerCarrito.setVisibility(View.VISIBLE);
+            if (cardOfertas != null) cardOfertas.setVisibility(View.VISIBLE);
         }
 
         dbHelper = new DBHelper(this);

@@ -20,11 +20,11 @@ import java.util.Locale;
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> {
 
-    private Context context;
-    private List<Producto> lista;
-    private DBHelper db;
-    private boolean isCrudMode;
-    private boolean isStockMode;
+    private final Context context;
+    private final List<Producto> lista;
+    private final DBHelper db;
+    private final boolean isCrudMode;
+    private final boolean isStockMode;
 
     public ProductoAdapter(Context context, List<Producto> lista, DBHelper db, boolean isCrudMode) {
         this.context = context;
@@ -87,19 +87,40 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         }
 
         if (isCrudMode) {
-            if (holder.btnEditar != null) {
-                holder.btnEditar.setOnClickListener(v -> {
-                    if (isStockMode) {
-                        mostrarModalEditarStock(p);
+            if (isStockMode) {
+                if (holder.btnEditar != null) holder.btnEditar.setVisibility(View.GONE);
+                if (holder.btnEliminar != null) holder.btnEliminar.setVisibility(View.GONE);
+                if (holder.tvStockBadge != null) {
+                    holder.tvStockBadge.setVisibility(View.VISIBLE);
+                    int stock = p.getStock();
+                    String estadoStock;
+                    int colorBg;
+                    if (stock <= 5) {
+                        estadoStock = "¡Bajo: " + stock + " un.!";
+                        colorBg = 0xFFD32F2F; // Rojo semáforo
+                    } else if (stock <= 10) {
+                        estadoStock = "Regular: " + stock + " un.";
+                        colorBg = 0xFFFFB300; // Amarillo / Ámbar semáforo
                     } else {
-                        mostrarModalEditar(p);
+                        estadoStock = "Óptimo: " + stock + " un.";
+                        colorBg = 0xFF2E7D32; // Verde semáforo
                     }
-                });
-            }
-            if (holder.btnEliminar != null) {
-                holder.btnEliminar.setOnClickListener(v -> mostrarModalEliminar(p));
+                    holder.tvStockBadge.setText(estadoStock);
+                    holder.tvStockBadge.setBackgroundColor(colorBg);
+                }
+            } else {
+                if (holder.tvStockBadge != null) holder.tvStockBadge.setVisibility(View.GONE);
+                if (holder.btnEditar != null) {
+                    holder.btnEditar.setVisibility(View.VISIBLE);
+                    holder.btnEditar.setOnClickListener(v -> mostrarModalEditar(p));
+                }
+                if (holder.btnEliminar != null) {
+                    holder.btnEliminar.setVisibility(View.VISIBLE);
+                    holder.btnEliminar.setOnClickListener(v -> mostrarModalEliminar(p));
+                }
             }
         } else {
+            if (holder.tvStockBadge != null) holder.tvStockBadge.setVisibility(View.GONE);
             if (holder.btnAgregar != null) {
                 holder.btnAgregar.setOnClickListener(v -> {
                     if (p.getStock() <= 0) {
@@ -217,47 +238,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         dialog.show();
     }
 
-    private void mostrarModalEditarStock(Producto p) {
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_editar_stock, null);
-        TextInputEditText etNombre = dialogView.findViewById(R.id.etStockNombre);
-        TextInputEditText etCategoria = dialogView.findViewById(R.id.etStockCategoria);
-        TextInputEditText etPrecio = dialogView.findViewById(R.id.etStockPrecio);
-        TextInputEditText etStock = dialogView.findViewById(R.id.etStockCantidad);
-        MaterialButton btnGuardar = dialogView.findViewById(R.id.btnStockGuardar);
-        MaterialButton btnCancelar = dialogView.findViewById(R.id.btnStockCancelar);
-
-        etNombre.setText(p.getNombre());
-        etCategoria.setText(p.getCategoria());
-        etPrecio.setText(String.valueOf(p.getPrecio()));
-        etStock.setText(String.valueOf(p.getStock()));
-
-        AlertDialog dialog = new AlertDialog.Builder(context)
-                .setView(dialogView)
-                .create();
-
-        btnGuardar.setOnClickListener(v -> {
-            String stockStr = etStock.getText() != null ? etStock.getText().toString().trim() : "";
-            if (stockStr.isEmpty()) {
-                Toast.makeText(context, "Ingrese el stock", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            boolean ok = db.actualizarProducto(p.getId(), p.getNombre(), p.getCategoria(), p.getPrecio(), Integer.parseInt(stockStr), p.getDescripcion());
-            if (ok) {
-                Toast.makeText(context, "Stock actualizado", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                if (context instanceof MainActivity) {
-                    ((MainActivity) context).onResume();
-                }
-            } else {
-                Toast.makeText(context, "Error al actualizar stock", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnCancelar.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
     private void mostrarModalEliminar(Producto p) {
         new AlertDialog.Builder(context)
                 .setTitle("Eliminar Producto")
@@ -283,7 +263,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombre, tvPrecio;
+        TextView tvNombre, tvPrecio, tvStockBadge;
         ImageView ivProducto;
         View btnAgregar, btnEditar, btnEliminar;
 
@@ -295,6 +275,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
             if (isCrudMode) {
                 btnEditar = itemView.findViewById(R.id.btnEditar);
                 btnEliminar = itemView.findViewById(R.id.btnEliminar);
+                tvStockBadge = itemView.findViewById(R.id.tvStockBadge);
             } else {
                 btnAgregar = itemView.findViewById(R.id.btnAgregarCarrito);
             }

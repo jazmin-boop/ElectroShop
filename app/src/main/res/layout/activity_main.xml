@@ -309,6 +309,7 @@
 
             <!-- Banner de Ofertas con publicidad.png y capa oscura para contraste -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardOfertas"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginHorizontal="20dp"
